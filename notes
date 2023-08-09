@@ -1,0 +1,31 @@
+"Welcome to korean vocabulary practice" -> "??? ?? ??? ?? ?? ?????"
+
+App:
+    attributes:
+    - vocab_list
+    methods:
+    - Add new words
+    - Review words
+    - Display all words
+    - Display size of vocabulary list
+
+VocabularyList:
+    attributes:
+    - Size
+    - Vector <Word>
+    methods:
+    - bool word_in_list
+    - add_word
+    - display_all
+    - display_size
+    constructor
+    - empty constructor
+    - from file constructor
+
+
+Word:
+    - Review count
+    - Last reviewed date
+    - Wrong count
+    - Korean string
+    - English string

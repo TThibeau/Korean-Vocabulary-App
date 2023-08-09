@@ -1,0 +1,5 @@
+# ninja log v5
+27	1485	7132085322234836	CMakeFiles/KoreanWordList.dir/src/Word.cpp.obj	9776d2250b2b444a
+4	2243	7132087405857189	CMakeFiles/KoreanWordList.dir/main.cpp.obj	7ae3adc26ead53dd
+25	2331	7132086562376296	CMakeFiles/KoreanWordList.dir/src/WordsList.cpp.obj	8c70303adbe4e9b8
+2244	2426	7132087407637924	KoreanWordList.exe	fb4b230529928cc8

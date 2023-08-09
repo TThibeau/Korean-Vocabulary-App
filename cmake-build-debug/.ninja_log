@@ -1,0 +1,13 @@
+# ninja log v5
+30	1056	7132967709005511	CMakeFiles/KoreanWordList.dir/src/Word.cpp.obj	4a50b694663f13ea
+3	2402	7132968031004502	CMakeFiles/KoreanWordList.dir/main.cpp.obj	37b65fda8dae6840
+3	979	7132969209802903	CMakeFiles/KoreanWordList.dir/src/WordsList.cpp.obj	654a0d36c7dc654c
+980	1192	7132969211870862	KoreanWordList.exe	aa3f1c14a0a5e1e0
+29	1143	7132986514976383	CMakeFiles/KoreanWordList.dir/src/App.cpp.obj	a260bc5c951d3c6a
+25	1167	7132986515245665	CMakeFiles/KoreanWordList.dir/src/VocabularyList.cpp.obj	90705bc08ebb867d
+3	2437	7132986527935550	CMakeFiles/KoreanWordList.dir/main.cpp.obj	37b65fda8dae6840
+2438	2669	7132986530215028	KoreanWordList.exe	919945723311c78d
+30	1052	7132994549312635	CMakeFiles/KoreanWordList.dir/src/App.cpp.obj	a260bc5c951d3c6a
+26	1075	7132994549551995	CMakeFiles/KoreanWordList.dir/src/VocabularyList.cpp.obj	90705bc08ebb867d
+4	2407	7132994562871135	CMakeFiles/KoreanWordList.dir/main.cpp.obj	37b65fda8dae6840
+2407	2645	7132994565211298	KoreanWordList.exe	919945723311c78d
