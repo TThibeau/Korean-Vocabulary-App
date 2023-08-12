@@ -16,3 +16,10 @@ Word::Word(std::wstring &korean_string, std::wstring &english_string)
           wrong_count(0),
           last_review_date(time(nullptr)) {
 }
+
+Word::Word(): korean_string(L""),
+              english_string(L""),
+              review_count(0),
+              wrong_count(0),
+              last_review_date(time(nullptr)) {
+}

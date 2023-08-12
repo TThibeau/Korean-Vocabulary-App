@@ -2,11 +2,10 @@
 // Created by Thibeau on 2023-08-09.
 //
 #include <iostream>
-#include <utility>
 #include "App.h"
 #include "Word.h"
 
-App::App(VocabularyList vocab_list) : vocab_list(std::move(vocab_list)), app_state(true) {
+App::App(VocabularyList &vocab_list) : vocab_list(&vocab_list), app_state(true) {
 }
 
 void App::add_word_mode() {
@@ -19,13 +18,13 @@ void App::add_word_mode() {
     std::wcout << L"새로운 단어: " << word_string << std::endl;
 
 
-    if (!(vocab_list.word_in_list(word_string))) {
+    if (!(vocab_list->word_in_list(word_string))) {
         std::wstring translation;
         std::cout << "What is the english translation of this korean word? ";
         std::wcin >> translation;
 
         Word new_word(word_string, translation);
-        vocab_list.add_word(new_word);
+        vocab_list->add_word(new_word);
 
         std::wcout << "'" << word_string << "' and its english translation '" << translation
                    << "' are added to the vocabulary list \n";
@@ -42,6 +41,7 @@ void App::app_loop() {
                  "[a]  - add a new word\n"
                  "[d]  - display the current list of words\n"
                  "[s]  - show the size of the current list of words\n"
+                 "[r]  - read a word from file\n"
                  "[:q] - terminate the program\n"
                  "=================================================================\n";
 
@@ -56,8 +56,11 @@ void App::app_loop() {
         add_word_mode();
 
     if (choice == "d" || choice == "D" || choice == "display" || choice == "Display")
-        vocab_list.display_all();
+        vocab_list->display_all();
 
     if (choice == "s" || choice == "S" || choice == "size" || choice == "Size")
-        vocab_list.display_size();
+        vocab_list->display_size();
+
+    if (choice == "r")
+        vocab_list->read_word_from_file((std::string) "vocabulary_list.txt");
 }

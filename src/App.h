@@ -10,9 +10,9 @@
 
 class App {
 private:
-    VocabularyList vocab_list;
+    VocabularyList *vocab_list;
 public:
-    explicit App(VocabularyList vocab_list);
+    App(VocabularyList &vocab_list);
 
     void add_word_mode();
 

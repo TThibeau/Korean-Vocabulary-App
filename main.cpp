@@ -15,14 +15,18 @@ int main() {
     std::wcout << welcome_string << std::endl;
 
     // Initialization
-    std::string vocabulary_filename = "vocabulary_list.csv";
-    VocabularyList vocab_list(vocabulary_filename); // TODO: To be implemented
+    std::string vocabulary_filename = "vocabulary_list.txt";
+    VocabularyList vocab_list(vocabulary_filename);
+//    VocabularyList vocab_list;
     App app(vocab_list);
 
     // Loop
     while (app.app_state) {
         app.app_loop();
     }
+
+    // Save the vocab list to a file
+    vocab_list.save_to_file(vocabulary_filename);
 
     // End
     std::wcout << L"\n잘 했어요" << std::endl;
@@ -32,34 +36,3 @@ int main() {
 
     return 0;
 }
-
-
-//#include <stdio.h>
-//#include <locale.h>
-//#include <iostream>
-//#include "windows.h"
-//
-//int main(void) {
-//    // localization (perhaps needed for some computers)
-//    setlocale(LC_CTYPE, "Korean");
-//    SetConsoleOutputCP(949);
-//    SetConsoleCP(949);
-//
-//    // open log file for writing
-//    FILE *outfile;
-//    outfile = _wfopen(L"log.txt", L"wt+,ccs=UTF-16LE");
-//    // test data
-//    wchar_t wch = L'술';
-//    std::wcout << wch << std::endl;
-//
-//    wchar_t nwch;
-//    std::wcin >> nwch;
-//    std::wcout << "Entered korean_string: " << nwch << std::endl;
-//
-//    // write one character to log file
-//    fwrite(&wch, sizeof(wchar_t), 1, outfile);
-//    // close file
-//    fclose(outfile);
-//
-//    return 0;
-//}

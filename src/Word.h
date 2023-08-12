@@ -11,14 +11,15 @@
 
 class Word {
 public:
+    Word();
     Word(std::wstring &korean_string, std::wstring &english_string);
 
     std::wstring korean_string;
     std::wstring english_string;
 
-    int review_count;
-    int wrong_count;
-    time_t last_review_date;
+    int review_count{};
+    int wrong_count{};
+    time_t last_review_date{};
 
     void display_word() const;
 };
