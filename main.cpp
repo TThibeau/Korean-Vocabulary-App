@@ -10,15 +10,13 @@ int main() {
     SetConsoleOutputCP(949);
     SetConsoleCP(949);
 
-    // Welcome
-    std::wstring welcome_string = L"한국어 어휘 연습에 오신 것을 환영합니다";
-    std::wcout << welcome_string << std::endl;
+    std::wstring learn_lang = L"korean";
+    std::wstring translate_lang = L"english";
 
     // Initialization
     std::string vocabulary_filename = "vocabulary_list.txt";
     VocabularyList vocab_list(vocabulary_filename);
-//    VocabularyList vocab_list;
-    App app(vocab_list);
+    App app(vocab_list, learn_lang, translate_lang);
 
     // Loop
     while (app.app_state) {
@@ -28,8 +26,8 @@ int main() {
     // Save the vocab list to a file
     vocab_list.save_to_file(vocabulary_filename);
 
-    // End
-    std::wcout << L"\n잘 했어요" << std::endl;
+    // End message
+    app.display_end_message();
 
     // Wait for user input before closing
     system("pause");

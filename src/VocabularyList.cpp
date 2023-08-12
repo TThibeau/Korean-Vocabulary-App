@@ -86,26 +86,26 @@ void VocabularyList::save_to_file(std::string &file_name) {
     file_obj.close();
 }
 
-void VocabularyList::read_word_from_file(std::string file_name) {
-    std::wifstream file_obj(file_name, std::ios::app);
-
-    // Move the reading position to the beginning of the file
-    file_obj.seekg(0);
-
-    if (file_obj.is_open()) {
-        std::wstring korean_string;
-
-        file_obj >> korean_string;
-        std::wcout << L"Word read from file: " << korean_string << std::endl;
-
-        while (!file_obj.eof()) {
-            std::getline(file_obj, korean_string);
-            file_obj >> korean_string;
-            if (file_obj)
-                std::wcout << L"Word read from file: " << korean_string << std::endl;
-        }
-    }
-    file_obj.close();
-}
+//void VocabularyList::read_word_from_file(std::string file_name) {
+//    std::wifstream file_obj(file_name, std::ios::app);
+//
+//    // Move the reading position to the beginning of the file
+//    file_obj.seekg(0);
+//
+//    if (file_obj.is_open()) {
+//        std::wstring korean_string;
+//
+//        file_obj >> korean_string;
+//        std::wcout << L"Word read from file: " << korean_string << std::endl;
+//
+//        while (!file_obj.eof()) {
+//            std::getline(file_obj, korean_string);
+//            file_obj >> korean_string;
+//            if (file_obj)
+//                std::wcout << L"Word read from file: " << korean_string << std::endl;
+//        }
+//    }
+//    file_obj.close();
+//}
 
 VocabularyList::VocabularyList(std::string &file_name): word_list(load_from_file(file_name)) {}

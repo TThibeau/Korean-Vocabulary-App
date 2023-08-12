@@ -5,28 +5,37 @@
 #include "App.h"
 #include "Word.h"
 
-App::App(VocabularyList &vocab_list) : vocab_list(&vocab_list), app_state(true) {
+App::App(VocabularyList &vocab_list, std::wstring learning_language, std::wstring translation_language)
+        : vocab_list(&vocab_list), app_state(true), learning_language(learning_language),
+          translation_language(translation_language) {
+
+    // Welcome
+    if (learning_language == L"korean" || learning_language == L"Korean") {
+        std::wstring welcome_string = L"한국어 어휘 연습에 오신 것을 환영합니다";
+        std::wcout << welcome_string << std::endl;
+    }
 }
 
 void App::add_word_mode() {
     system("cls");
 
     std::wstring word_string; // Use wstring for wide characters
-    std::wcout << L"\nType the korean word you want to add to the list: ";
+    std::wcout << L"\nType the " << learning_language << " word you want to add to the list: ";
     std::wcin >> word_string;
 
-    std::wcout << L"새로운 단어: " << word_string << std::endl;
-
+    // Confirm the input
+    display_new_word_message(word_string);
 
     if (!(vocab_list->word_in_list(word_string))) {
         std::wstring translation;
-        std::cout << "What is the english translation of this korean word? ";
+        std::wcout << "What is the " << translation_language << "translation of this " << learning_language
+                   << " word? ";
         std::wcin >> translation;
 
         Word new_word(word_string, translation);
         vocab_list->add_word(new_word);
 
-        std::wcout << "'" << word_string << "' and its english translation '" << translation
+        std::wcout << "'" << word_string << "' and its  " << translation_language << "translation '" << translation
                    << "' are added to the vocabulary list \n";
 
     } else {
@@ -41,7 +50,6 @@ void App::app_loop() {
                  "[a]  - add a new word\n"
                  "[d]  - display the current list of words\n"
                  "[s]  - show the size of the current list of words\n"
-                 "[r]  - read a word from file\n"
                  "[:q] - terminate the program\n"
                  "=================================================================\n";
 
@@ -60,7 +68,16 @@ void App::app_loop() {
 
     if (choice == "s" || choice == "S" || choice == "size" || choice == "Size")
         vocab_list->display_size();
+}
 
-    if (choice == "r")
-        vocab_list->read_word_from_file((std::string) "vocabulary_list.txt");
+void App::display_end_message() {
+    if (learning_language == L"korean" || learning_language == L"Korean") {
+        std::wcout << L"\n잘 했어요" << std::endl;
+    }
+}
+
+void App::display_new_word_message(const std::wstring &word_string) {
+    if (learning_language == L"korean" || learning_language == L"Korean") {
+        std::wcout << L"새로운 단어: " << word_string << std::endl;
+    }
 }

@@ -25,7 +25,7 @@ public:
 
     std::vector<Word> load_from_file(std::string &file_name);
 
-    void read_word_from_file(std::string file_name);
+//    void read_word_from_file(std::string file_name);
 
     void save_to_file(std::string &file_name);
 
