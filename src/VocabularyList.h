@@ -12,6 +12,10 @@
 class VocabularyList {
 private:
     std::vector<Word> word_list;
+
+private:
+    Word build_word_from_line(const std::wstring &line);
+
 public:
     explicit VocabularyList(std::string &file_name);
     ~VocabularyList();
@@ -24,8 +28,6 @@ public:
     void add_word(Word &new_word);
 
     std::vector<Word> load_from_file(std::string &file_name);
-
-//    void read_word_from_file(std::string file_name);
 
     void save_to_file(std::string &file_name);
 

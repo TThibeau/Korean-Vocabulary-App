@@ -18,28 +18,30 @@ App::App(VocabularyList &vocab_list, std::wstring learning_language, std::wstrin
 
 void App::add_word_mode() {
     system("cls");
+    wchar_t delimiter = L'\n'; // Delimiter (newline)
+    std::wcin.ignore(); // Ignore any potential leftover newline characters - Needed to avoid skipping user input
 
     std::wstring word_string; // Use wstring for wide characters
     std::wcout << L"\nType the " << learning_language << " word you want to add to the list: ";
-    std::wcin >> word_string;
-
-    // Confirm the input
-    display_new_word_message(word_string);
+    std::getline(std::wcin, word_string, delimiter);
 
     if (!(vocab_list->word_in_list(word_string))) {
+        // Confirm the input
+        display_new_word_message(word_string);
+
         std::wstring translation;
-        std::wcout << "What is the " << translation_language << "translation of this " << learning_language
+        std::wcout << "What is the " << translation_language << " translation of this " << learning_language
                    << " word? ";
-        std::wcin >> translation;
+        std::getline(std::wcin, translation, delimiter);
 
         Word new_word(word_string, translation);
         vocab_list->add_word(new_word);
 
-        std::wcout << "'" << word_string << "' and its  " << translation_language << "translation '" << translation
+        std::wcout << "'" << word_string << "' and its  " << translation_language << " translation '" << translation
                    << "' are added to the vocabulary list \n";
 
     } else {
-        std::wcout << "'" << word_string << "' was already in the vocabulary list" << std::endl;
+        std::wcout << "'" << word_string << "' was already included in the vocabulary list" << std::endl;
     }
 }
 

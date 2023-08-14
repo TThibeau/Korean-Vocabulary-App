@@ -4,7 +4,9 @@
 #include <iostream>
 #include <fstream> // For std::ofstream
 #include <codecvt>
+#include <sstream> // For std::wstringstream
 #include "VocabularyList.h"
+
 
 void VocabularyList::display_all() {
     system("cls");
@@ -24,7 +26,7 @@ void VocabularyList::display_size() {
 
 bool VocabularyList::word_in_list(std::wstring &word) {
     for (Word &wil: word_list) {
-        if (wil.korean_string == word) {
+        if (wil.learn_string == word) {
             return true;
         }
     }
@@ -48,26 +50,20 @@ std::vector<Word> VocabularyList::load_from_file(std::string &file_name) {
     file_obj.seekg(0);
 
     if (file_obj.is_open()) {
-        std::wstring korean_string;
-        file_obj >> korean_string;
-        Word first_word{};
-        first_word.korean_string = korean_string;
-        loaded_words.push_back(first_word);
+        std::wstring line;
 
         while (!file_obj.eof()) {
-            std::getline(file_obj, korean_string);
-            file_obj >> korean_string;
+            std::getline(file_obj, line);
             if (file_obj) {
-                Word new_word{};
-                new_word.korean_string = korean_string;
-                loaded_words.push_back(new_word);
+                Word word = build_word_from_line(line);
+                if (!word.learn_string.empty())
+                    loaded_words.push_back(word);
             }
         }
     }
     file_obj.close();
     return loaded_words;
 }
-
 
 
 void VocabularyList::save_to_file(std::string &file_name) {
@@ -80,32 +76,39 @@ void VocabularyList::save_to_file(std::string &file_name) {
 
     // Write each word in the vector
     for (const Word &word: word_list) {
-        file_obj << word.korean_string << std::endl;
+        file_obj << word.learn_string << ","
+                 << word.translation_string << ","
+                 << word.review_count << ","
+                 << word.wrong_count << ","
+                 << word.last_review_date << std::endl;
     }
 
     file_obj.close();
 }
 
-//void VocabularyList::read_word_from_file(std::string file_name) {
-//    std::wifstream file_obj(file_name, std::ios::app);
-//
-//    // Move the reading position to the beginning of the file
-//    file_obj.seekg(0);
-//
-//    if (file_obj.is_open()) {
-//        std::wstring korean_string;
-//
-//        file_obj >> korean_string;
-//        std::wcout << L"Word read from file: " << korean_string << std::endl;
-//
-//        while (!file_obj.eof()) {
-//            std::getline(file_obj, korean_string);
-//            file_obj >> korean_string;
-//            if (file_obj)
-//                std::wcout << L"Word read from file: " << korean_string << std::endl;
-//        }
-//    }
-//    file_obj.close();
-//}
+VocabularyList::VocabularyList(std::string &file_name) : word_list(load_from_file(file_name)) {}
 
-VocabularyList::VocabularyList(std::string &file_name): word_list(load_from_file(file_name)) {}
+Word VocabularyList::build_word_from_line(const std::wstring &line) {
+    std::wstringstream ss(line);  // Create a wstringstream from the line
+
+    std::vector<std::wstring> values;  // Create a vector to store the separated values
+
+    while (ss.good()) {
+        std::wstring substr;
+        getline(ss, substr, L',');  // Split the line using ',' as the delimiter
+        values.push_back(substr);   // Add the extracted value to the vector
+    }
+
+    if (values.size() > 1) {
+        // TODO: Perhaps an enum (instead of vector) serves better here?
+        Word new_word(values.at(0),
+                      values.at(1),
+                      std::stoi(values.at(2)),
+                      std::stoi(values.at(3)),
+                      values.at(4)
+        );
+        return new_word;
+    } else {
+        return {};
+    }
+}

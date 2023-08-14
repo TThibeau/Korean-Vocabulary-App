@@ -12,14 +12,20 @@
 class Word {
 public:
     Word();
-    Word(std::wstring &korean_string, std::wstring &english_string);
+    Word(std::wstring &learn_string, std::wstring &translation_string);
+    Word(std::wstring &learn_string,
+         std::wstring &translation_string,
+         int review_count,
+         int wrong_count,
+         std::wstring last_review);
 
-    std::wstring korean_string;
-    std::wstring english_string;
+    std::wstring learn_string;
+    std::wstring translation_string;
 
     int review_count{};
     int wrong_count{};
-    time_t last_review_date{};
+//    time_t last_review_date{};
+    std::wstring last_review_date{};
 
     void display_word() const;
 };
