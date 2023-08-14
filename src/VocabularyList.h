@@ -10,7 +10,7 @@
 #include "Word.h"
 
 class VocabularyList {
-private:
+public:
     std::vector<Word> word_list;
 
 private:
@@ -33,6 +33,7 @@ public:
 
     bool word_in_list(std::wstring &word);
 
+    int get_next_review_word_index();
 };
 
 

@@ -50,6 +50,7 @@ void App::app_loop() {
     std::cout << "\n=================================================================\n"
                  "What would you like to do?\n"
                  "[a]  - add a new word\n"
+                 "[r]  - review the words\n"
                  "[d]  - display the current list of words\n"
                  "[s]  - show the size of the current list of words\n"
                  "[:q] - terminate the program\n"
@@ -70,6 +71,9 @@ void App::app_loop() {
 
     if (choice == "s" || choice == "S" || choice == "size" || choice == "Size")
         vocab_list->display_size();
+
+    if (choice == "r" || choice == "R" || choice == "review" || choice == "Review")
+        review_words_mode();
 }
 
 void App::display_end_message() {
@@ -81,5 +85,50 @@ void App::display_end_message() {
 void App::display_new_word_message(const std::wstring &word_string) {
     if (learning_language == L"korean" || learning_language == L"Korean") {
         std::wcout << L"새로운 단어: " << word_string << std::endl;
+    }
+}
+
+void App::review_words_mode() {
+    wchar_t delimiter = L'\n'; // Delimiter (newline)
+    std::wcin.ignore(); // Ignore any potential leftover newline characters - Needed to avoid skipping user input
+
+    bool review_on = true;
+
+    while (review_on) {
+        system("cls");
+        std::wcout << "=======REVIEW=======" << std::endl;
+        int index = vocab_list->get_next_review_word_index();
+
+        Word &review_word = vocab_list->word_list.at(index);
+
+        bool correct = false;
+
+        while (!correct) {
+            system("cls");
+            std::wcout << "=======REVIEW=======" << std::endl;
+            std::wcout << review_word.translation_string << " -> ";
+
+            std::wstring user_input;
+            std::getline(std::wcin, user_input, delimiter);
+
+            if (user_input == L":q") {
+                correct = true;
+                review_on = false;
+                break;
+            }
+
+            if (user_input == review_word.learn_string) {
+                correct = true;
+                std::wcout << L"\n맞습니다" << std::endl;
+                review_word.update_review_state(true);
+            } else {
+                std::wcout << L"\n그것은 정확하지 않습니다. 다시 시도하십시오." << std::endl;
+                std::wcout << L"The correct translation of '" << review_word.translation_string << L"' is "
+                           << review_word.learn_string << std::endl;
+                review_word.update_review_state(false);
+            }
+
+            system("pause");
+        }
     }
 }

@@ -16,10 +16,14 @@ private:
 private:
     void display_new_word_message(const std::wstring &word_string);
 
+
+
 public:
     App(VocabularyList &vocab_list, std::wstring learning_language, std::wstring translation_language);
 
     void add_word_mode();
+
+    void review_words_mode();
 
     void app_loop();
 

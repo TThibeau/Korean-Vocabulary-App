@@ -80,7 +80,9 @@ void VocabularyList::save_to_file(std::string &file_name) {
                  << word.translation_string << ","
                  << word.review_count << ","
                  << word.wrong_count << ","
-                 << word.last_review_date << std::endl;
+                 << word.last_review_date << ","
+                 << word.proficiency_score << ","
+                 << word.days_since_review << std::endl;
     }
 
     file_obj.close();
@@ -105,10 +107,30 @@ Word VocabularyList::build_word_from_line(const std::wstring &line) {
                       values.at(1),
                       std::stoi(values.at(2)),
                       std::stoi(values.at(3)),
-                      values.at(4)
-        );
+                      values.at(4));
         return new_word;
     } else {
         return {};
     }
+}
+
+int VocabularyList::get_next_review_word_index() {
+    float lowest_score = 100;
+    int lowest_count = 9999;
+    int index = 0;
+    int i = 0;
+
+    for (Word &wil: word_list) {
+        if (wil.proficiency_score < lowest_score) {
+            lowest_score = wil.proficiency_score;
+            index = i;
+        } else if (wil.proficiency_score == lowest_score) {
+            if (wil.review_count < lowest_count) {
+                lowest_count = wil.review_count;
+                index = i;
+            }
+        }
+        i++;
+    }
+    return index;
 }
